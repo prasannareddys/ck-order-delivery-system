@@ -9,7 +9,7 @@ import (
 
 func main() {
 	rootCmd := &cobra.Command{
-		Use:   "order-system",
+		Use:   "ck-order-delivery-system",
 		Short: "Entry point command for the application",
 	}
 

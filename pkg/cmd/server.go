@@ -16,7 +16,7 @@ func NewServerCommand() *cobra.Command {
 	var filePath string
 
 	processOrdersCmd := &cobra.Command{
-		Use:   "start [--ops][--order-file-path]",
+		Use:   "server [--ops][--order-file-path]",
 		Short: "Order delivery system",
 		RunE: func(cmd *cobra.Command, args []string) error {
 			var wg sync.WaitGroup
@@ -33,6 +33,7 @@ func NewServerCommand() *cobra.Command {
 				defer close(deliveryChannel)
 				for ord := range orderChannel {
 					// Logic to select shelf goes here
+					fmt.Print("\n")
 					fmt.Println("Order received to be placed on shelf ", ord)
 					s := shelf.NewShelf()
 					err := s.AddOrderToShelf(ord)
