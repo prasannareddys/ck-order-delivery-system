@@ -1,4 +1,4 @@
-package orders
+package order
 
 import (
 	"encoding/json"
@@ -14,7 +14,7 @@ func NewOrder() Order {
 // map each order to struct Order
 // returns []Orders
 
-func (ord Order)  ReadOrders(path string) ([]Order, error) {
+func (ord Order) ReadOrders(path string) ([]Order, error) {
 
 	file, err := os.Open(path)
 	if err != nil {
