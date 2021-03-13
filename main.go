@@ -1,9 +1,9 @@
 package main
 
 import (
+	"github.com/Prasannareddys/ck-order-delivery-system/pkg/cmd"
 	"log"
 
-	"github.com/Propertyfinder/ck-order-delivery-system/pkg/cmd"
 	"github.com/spf13/cobra"
 )
 

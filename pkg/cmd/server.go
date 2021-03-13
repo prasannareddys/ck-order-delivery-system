@@ -6,8 +6,8 @@ import (
 	"sync"
 	"time"
 
-	"github.com/Propertyfinder/ck-order-delivery-system/pkg/order"
-	"github.com/Propertyfinder/ck-order-delivery-system/pkg/shelf"
+	"github.com/Prasannareddys/ck-order-delivery-system/pkg/order"
+	"github.com/Prasannareddys/ck-order-delivery-system/pkg/shelf"
 	"github.com/spf13/cobra"
 )
 

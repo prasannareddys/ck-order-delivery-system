@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"sync"
 
-	"github.com/Propertyfinder/ck-order-delivery-system/pkg/order"
+	"github.com/Prasannareddys/ck-order-delivery-system/pkg/order"
 )
 
 type Shelf struct {
@@ -18,7 +18,6 @@ type Shelf struct {
 
 type Service interface {
 	AddOrderToShelf(order.Order) error
-	DeleteOrderFromShelf(order.Order) error
 }
 
 func NewShelf() Shelf{
@@ -75,7 +74,7 @@ func (s *Shelf) AddOrderToShelf(ord order.Order) (order.Order, error) {
 
 func addToShelfHandler(ord order.Order, s *Shelf) (order.Order, error) {
 
-	// ifshelf slot is avaialble
+	// if shelf slot is avaialble
 	if isShelfAvailable(s) {
 		ord, err := addToShelf(ord, s)
 

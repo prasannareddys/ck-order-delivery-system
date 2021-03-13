@@ -2,7 +2,7 @@ package shelf
 
 import (
 	"fmt"
-	"github.com/Propertyfinder/ck-order-delivery-system/pkg/order"
+	"github.com/Prasannareddys/ck-order-delivery-system/pkg/order"
 	"time"
 )
 

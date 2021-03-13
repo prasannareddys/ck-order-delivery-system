@@ -1,4 +1,4 @@
-module github.com/Propertyfinder/ck-order-delivery-system
+module github.com/Prasannareddys/ck-order-delivery-system
 
 go 1.14
 
