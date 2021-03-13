@@ -36,12 +36,13 @@ func NewServerCommand() *cobra.Command {
 					fmt.Print("\n")
 					fmt.Println("Order received to be placed on shelf ", ord)
 					s := shelf.NewShelf()
-					err := s.AddOrderToShelf(ord)
+					aOrd, err := s.AddOrderToShelf(ord)
 					if err != nil {
 						fmt.Errorf("failed to add orderto shelf error : %w",  err)
 					} else {
 						// After placing on shelf forward it to courier channel
-						deliveryChannel <- ord
+						fmt.Println("shelfname is come:",aOrd.AssignedShelfName)
+						deliveryChannel <- aOrd
 					}
 				}
 			}()

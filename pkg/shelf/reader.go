@@ -1,6 +1,7 @@
 package shelf
 
 import (
+	"fmt"
 	"github.com/Propertyfinder/ck-order-delivery-system/pkg/order"
 	"time"
 )
@@ -19,7 +20,7 @@ func isShelfAvailable(s *Shelf) bool {
 	return oCount < s.Capacity
 }
 
-func CalculateOrderShelfLife(ord order.Order, s Shelf)  float64 {
+func CalculateOrderShelfLife(ord order.Order, s *Shelf)  float64 {
 	var sdm float64
 	sdm = 1
 	if s.Name == "Overflow shelf" {
@@ -31,7 +32,7 @@ func CalculateOrderShelfLife(ord order.Order, s Shelf)  float64 {
 }
 
 // return order index to delete
-func findShelfOrderToDelete(s Shelf)  *order.Order {
+func findShelfOrderToDelete(s *Shelf)  *order.Order {
 
 	for _,o := range s.Orders {
 		v := CalculateOrderShelfLife(o, s)
@@ -68,8 +69,11 @@ func GetShelfByName(n string)  *Shelf {
 	return nil
 }
 
-func GetOrderShelf(ord order.Order) (*Shelf) {
+func GetOrderShelf(ord order.Order) *Shelf {
+
+	fmt.Println("*******",ord)
 s := GetShelfByName(ord.AssignedShelfName)
+fmt.Println(s.Name)
 	for _,o := range s.Orders {
 		if o.ID == ord.ID {
 			return  s
