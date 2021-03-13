@@ -70,8 +70,6 @@ func GetShelfByName(n string)  *Shelf {
 }
 
 func GetOrderShelf(ord order.Order) *Shelf {
-
-	fmt.Println("*******",ord)
 s := GetShelfByName(ord.AssignedShelfName)
 fmt.Println(s.Name)
 	for _,o := range s.Orders {

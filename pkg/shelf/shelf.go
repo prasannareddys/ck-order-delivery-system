@@ -53,19 +53,20 @@ func (s *Shelf) AddOrderToShelf(ord order.Order) (order.Order, error) {
 		if err != nil {
 			return ord,err
 		}
-		break
+		return ord, err
 	case "cold":
 		ord,err := addToShelfHandler(ord, &ColdShelf)
 		if err != nil {
 			return ord,err
 		}
-		break
+		return ord, err
 	case "frozen":
 		ord,err := addToShelfHandler(ord, &FrozenShelf)
+
 		if err != nil {
 			return ord,err
 		}
-		break
+		return ord, err
 	default:
 		fmt.Printf("Order do not have temp")
 	}
@@ -77,6 +78,7 @@ func addToShelfHandler(ord order.Order, s *Shelf) (order.Order, error) {
 	// ifshelf slot is avaialble
 	if isShelfAvailable(s) {
 		ord, err := addToShelf(ord, s)
+
 		if err != nil {
 			return ord, err
 		}
@@ -101,7 +103,7 @@ func DeleteOrderFromShelf(o order.Order, s *Shelf) error {
 	so := s.Orders
 	if indexToRemove > -1 {
 		fmt.Print("\n")
-		fmt.Printf("Deleting order with id %s  from %s shelf ", o.ID, s.Temp)
+		fmt.Printf("Deleting order with id %s  from %s shelf", o.ID, s.Temp)
 
 		s.mu.Lock()
 		defer s.mu.Unlock()
@@ -204,14 +206,14 @@ func addToShelf(ord order.Order, s *Shelf) (order.Order, error) {
 		s.mu.Lock()
 		defer s.mu.Unlock()
 		ord.AssignedShelfName = s.Name
-		uOrds := append(s.Orders, ord)
-		s.Orders = uOrds
+		s.Orders = append(s.Orders, ord)
 
 		sl := CalculateOrderShelfLife(ord, s)
 		fmt.Print("\n")
-		fmt.Printf("Added order with id %s  to %s shelf, Shelf life: %f", ord.ID, s.Temp, sl)
+		fmt.Printf("Added order with id %s  to %s, Shelf life: %f", ord.ID, ord.AssignedShelfName, sl)
 
 		return ord, nil
+
 	}
 
 	return ord, fmt.Errorf("Shelf is occupied for order with id : %s", ord.ID)

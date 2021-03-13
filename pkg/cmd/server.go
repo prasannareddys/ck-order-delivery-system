@@ -34,14 +34,14 @@ func NewServerCommand() *cobra.Command {
 				for ord := range orderChannel {
 					// Logic to select shelf goes here
 					fmt.Print("\n")
+					fmt.Print("\n")
 					fmt.Println("Order received to be placed on shelf ", ord)
 					s := shelf.NewShelf()
 					aOrd, err := s.AddOrderToShelf(ord)
 					if err != nil {
-						fmt.Errorf("failed to add orderto shelf error : %w",  err)
+						fmt.Errorf("failed to add order to the shelf error : %w",  err)
 					} else {
 						// After placing on shelf forward it to courier channel
-						fmt.Println("shelfname is come:",aOrd.AssignedShelfName)
 						deliveryChannel <- aOrd
 					}
 				}
@@ -54,8 +54,10 @@ func NewServerCommand() *cobra.Command {
 					if  s != nil {
 						err := shelf.DeleteOrderFromShelf(ord, s)
 						if err != nil {
-							fmt.Printf("Order with id %s from shelf %s is delivered ", ord.ID, ord.AssignedShelfName)
+							fmt.Errorf("failed to deviver order to shelf error : %w",  err)
 						}
+						fmt.Print("\n")
+						fmt.Printf("Order with id %s from %s is delivered ", ord.ID, ord.AssignedShelfName)
 					}
 
 				}

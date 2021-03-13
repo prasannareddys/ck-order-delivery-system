@@ -22,3 +22,9 @@ func TestNewServerCommand(t *testing.T) {
 	}
 
 }
+
+// case: adding to same temp shelf
+// case: adding to  overflow shelf
+// case: adding to  overflow shelf after moving
+// case: adding to  overflow shelf after discarding
+// case: adding to  overflow shelf after discarding
