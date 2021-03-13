@@ -49,7 +49,7 @@ func (s Shelf) AddOrderToShelf(ord order.Order) error {
 		}
 		break
 	default:
-		fmt.Println("Order do not have temp")
+		fmt.Printf("Order do not have temp")
 	}
 	return nil
 }
@@ -82,11 +82,11 @@ func DeleteOrderFromShelf(o order.Order, s *Shelf) error {
 	}
 	so := s.Orders
 	if indexToRemove > -1 {
-		fmt.Println("Deleting order with id %s  from %s shelf ", o.ID, s.Temp)
+		fmt.Printf("Deleting order with id %s  from %s shelf ", o.ID, s.Temp)
 		mo := append(so[:indexToRemove], so[indexToRemove+1:]...)
 		s.Orders = mo
 		sl := CalculateOrderShelfLife(o, *s)
-		fmt.Println("Deleted order with id %s  from %s shelf, shelf life: %f", o.ID, s.Temp, sl)
+		fmt.Printf("Deleted order with id %s  from %s shelf, shelf life: %f", o.ID, s.Temp, sl)
 	}
 	
 	// inform delivery about deletion
@@ -110,7 +110,7 @@ func moveOrder() error {
 			if err != nil {
 				return err
 			}
-			fmt.Println("Moved order with id %s from Overflow shelf to %s shelf", o.ID, s.Temp)
+			fmt.Printf("Moved order with id %s from Overflow shelf to %s shelf", o.ID, s.Temp)
 			return nil
 		}
 	}
@@ -128,19 +128,19 @@ func moveOrderHandler() (error, bool) {
 
 func overflowShelfHandler(ord order.Order, s Shelf) error {
 
-	fmt.Println("Adding order with id %s and tempareture %s to overflow shelf", ord.ID, ord.Temp)
+	fmt.Printf("Adding order with id %s and tempareture %s to overflow shelf", ord.ID, ord.Temp)
 	// 1. add to overflow if slot is available
 	if isShelfAvailable(&s) {
 		err := addToShelf(ord, &s)
 		if err != nil {
 			return err
 		}
-		fmt.Println("Added to overflow shelf %s ", ord.ID)
+		fmt.Printf("Added to overflow shelf %s ", ord.ID)
 		return nil
 	}
 
 	// 2. move order from overflow to available shelf
-	fmt.Println("Overflow shelf is not available for %s ", ord.ID)
+	fmt.Printf("Overflow shelf is not available for %s ", ord.ID)
 	err, mo := moveOrderHandler()
 	if err != nil {
 		return err
@@ -150,12 +150,12 @@ func overflowShelfHandler(ord order.Order, s Shelf) error {
 		if err != nil {
 			return err
 		}
-		fmt.Println("Added to overflow shelf %s ", ord.ID)
+		fmt.Printf("Added to overflow shelf %s ", ord.ID)
 		return nil
 	}
 
 	// 3. discard random order(can be with less life) from overflow
-	fmt.Println("Overflow shelf is not available for %s ", ord.ID)
+	fmt.Printf("Overflow shelf is not available for %s ", ord.ID)
 	do := findShelfOrderToDelete(s)
 	err = DeleteOrderFromShelf(*do, &s)
 	if err != nil {
@@ -166,20 +166,20 @@ func overflowShelfHandler(ord order.Order, s Shelf) error {
 	if err != nil {
 		return err
 	}
-	fmt.Println("Added to overflow shelf %s ", ord.ID)
+	fmt.Printf("Added to overflow shelf %s ", ord.ID)
 	return nil
 }
 
 func addToShelf(ord order.Order, s *Shelf) error {
 
-	fmt.Println("Adding order with id %s  to %s shelf ", ord.ID, s.Temp)
+	fmt.Printf("Adding order with id %s  to %s shelf ", ord.ID, s.Temp)
 	if isShelfAvailable(s) { // double check if shelf is not occupied by concurrency run
 		ord.AssignedShelfName = s.Name
 		uOrds := append(s.Orders, ord)
 
 		s.Orders = uOrds
 		sl := CalculateOrderShelfLife(ord, *s)
-		fmt.Println("Adding order with id %s  to %s shelf, Shelf life: %f", ord.ID, s.Temp, sl)
+		fmt.Printf("Adding order with id %s  to %s shelf, Shelf life: %f", ord.ID, s.Temp, sl)
 
 		return nil
 	}
